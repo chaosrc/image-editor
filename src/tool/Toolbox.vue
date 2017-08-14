@@ -23,5 +23,7 @@ export default {
 }
 </script>
 <style scoped>
-
+  label{
+    display:block;
+  }
 </style>

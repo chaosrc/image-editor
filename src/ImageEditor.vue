@@ -2,10 +2,12 @@
 <template>
   <div  id="image-edit">
     <upload-file @selected="imageUpload"></upload-file>
-    <canvas ref="canvasimg" width="300px" height="300px">
-      you browser dose'nt surport canvas
-    </canvas>
-    <toolbox @select="handleToolSelect"></toolbox>
+    <div>
+      <toolbox class="float-left" @select="handleToolSelect"></toolbox>
+      <canvas ref="canvas" width="300px" height="300px">
+        you browser dosen't surport canvas
+      </canvas>
+    </div>
   </div>
 
 </template>
@@ -13,31 +15,61 @@
 <script>
  import UploadFile from './UploadFile.vue'; 
  import Toolbox from './tool/Toolbox.vue';
+ import Drag from './tool/Drag.js';
+ import ToolManager from './tool/ToolManager';
   export default {
     name:'image-edit',
     data(){
       return {
-
+        canvas:'',
+        toolManager:'',
+        zoom:''
       }
     },
+    mounted(){
+     this.init();
+     window.mycvs=this.canvas;
+    },
     methods:{
-      imageUpload(file){
-        this.showImageInCanvas(file);
+      init(){
+        this.canvas=new fabric.Canvas(this.$refs.canvas);
+        // this.toolManager=new ToolManager(this.canvas);
       },
-      showImageInCanvas(file){
-        let url=window.URL.createObjectURL(file);
+      imageUpload(file){
+        this.drawImage(file);
+      },
+      drawImage(file){
+        let cvs=this.canvas;
+        this.getImageFromFile(file,function(img){
+          let image=new fabric.Image(img);
+          cvs.add(image);
+        });
+      },
+      getImageFromFile(f,cb){
+         let url=window.URL.createObjectURL(f);
+         this.getImageFromURL(url,function(img){
+           window.URL.revokeObjectURL(img.src);
+           cb(img)
+         })
+      },
+      getImageFromURL(url,cb){
         let img=new Image();
         img.src=url;
-        let editor=this;
         img.onload=function(){
-          window.URL.revokeObjectURL(this.src);
-          let ctx=editor.$refs.canvasimg.getContext('2d');
-          ctx.drawImage(img,10,10);
-        };
+          cb(img);
+        }
       },
       handleToolSelect(value){
-        let ctx=this.$refs.canvasimg.getContext('2d');
-        ctx.fillText(value,ctx.canvas.width/2,ctx.canvas.height/2);
+        //TODO:remove event and state?
+        if(value==='drag'){
+          // console.log('select drag tool');
+          // Drag.selected(this.$refs.canva);
+        }
+        if(value==='zoom'){
+            if(!zoom) this.zoom=new Zoom(this.canvas);
+            zoom.selected();
+        }
+        
       }
     },
     components:{
@@ -46,3 +78,18 @@
     }
   }
 </script>
+
+<style scoped>
+
+</style>
+<style>
+  .float-left{
+    /* float:left; */
+  }
+  canvas{
+    border:2px black solid;
+    float:left;
+  }
+
+</style>
+
