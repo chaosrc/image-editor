@@ -7,7 +7,6 @@
   
 </template>
 <script>
-import Drag from './Drag.js';
 export default {
   name:"toolbox",
   data(){

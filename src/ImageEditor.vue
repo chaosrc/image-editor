@@ -4,18 +4,19 @@
     <upload-file @selected="imageUpload"></upload-file>
     <div>
       <toolbox class="float-left" @select="handleToolSelect"></toolbox>
-      <canvas ref="canvas" width="300px" height="300px">
-        you browser dosen't surport canvas
-      </canvas>
+      <div class="canvas-container float-left">
+        <canvas ref="canvas" width="300px" height="300px">
+          you browser dosen't surport canvas
+        </canvas>
+      </div>
     </div>
   </div>
 
 </template>
 
 <script>
- import UploadFile from './UploadFile.vue'; 
- import Toolbox from './tool/Toolbox.vue';
- import Drag from './tool/Drag.js';
+ import UploadFile from './view/UploadFile.vue'; 
+ import Toolbox from './view/Toolbox.vue';
  import ToolManager from './tool/ToolManager';
   export default {
     name:'image-edit',
@@ -23,17 +24,18 @@
       return {
         canvas:'',
         toolManager:'',
-        zoom:''
+        toolProperty:''
       }
     },
     mounted(){
      this.init();
+     //just for test
      window.mycvs=this.canvas;
     },
     methods:{
       init(){
         this.canvas=new fabric.Canvas(this.$refs.canvas);
-        // this.toolManager=new ToolManager(this.canvas);
+        this.toolManager=new ToolManager(this.canvas);
       },
       imageUpload(file){
         this.drawImage(file);
@@ -60,16 +62,8 @@
         }
       },
       handleToolSelect(value){
-        //TODO:remove event and state?
-        if(value==='drag'){
-          // console.log('select drag tool');
-          // Drag.selected(this.$refs.canva);
-        }
-        if(value==='zoom'){
-            if(!zoom) this.zoom=new Zoom(this.canvas);
-            zoom.selected();
-        }
-        
+        this.toolManager.select(value);
+        // this.toolProperty=this.toolManager.toolProperty;
       }
     },
     components:{
@@ -84,12 +78,20 @@
 </style>
 <style>
   .float-left{
-    /* float:left; */
+     float:left; 
   }
   canvas{
     border:2px black solid;
-    float:left;
   }
-
+  .cursor-grab{
+    cursor:move;
+    cursor:-webkit-grab;
+    cursor:-mz-grab;
+  }
+  .cursor-grab::active{
+    cursor:move;
+    cursor:-webkit-grabbing;
+    cursor:-mz-grabbing;
+  }
 </style>
 
