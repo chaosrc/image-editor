@@ -1,8 +1,10 @@
 import Drag from './Drag.js';
+import TextTool from './Text.js'
 export default class ToolManager{
   constructor(canvas){
     this._currentProperty;
     this.currentTool;
+    this.toolInstance={};
     this.canvas=canvas;
     this.initCanvasState();
   }
@@ -18,6 +20,7 @@ export default class ToolManager{
   select(tool){
     if(this.currentTool) this.currentTool.remove();
     this.currentTool=this.getTool(tool);
+    if(!this.currentTool) return;
     this.currentTool.selected();
     this.toolProperty=this.currentTool.property;
   }
@@ -25,20 +28,13 @@ export default class ToolManager{
    * Get tool object from tool name 
    * @param tool name of tool object
    */
-  getTool(tool){
-    let tl;
-    switch(tool){
-      // case 'zoom':
-      //    tl=Zoom.getInstance();
-      //    break;
-      case 'drag':
-         tl=new Drag(this.canvas);
-         break;
-      default:
-        tl={};
-         console.log(`${tool} is not existence`);
+  getTool(toolName){
+    let tool=this.toolInstance[toolName];
+    if(!tool) {
+      tool=ToolFactory.get(toolName,this.canvas);
+      this.toolInstance[toolName]=tool;
     }
-    return tl;
+    return tool;
   }
   get toolProperty(){
     return this._currentProperty;
@@ -47,3 +43,16 @@ export default class ToolManager{
     this._currentProperty=property;
   }
 }
+/**
+ * ToolFactory to create tool object
+ */
+class ToolFactory{
+  static get(name,canvas){
+    let tool=ToolFactory.tools[name];
+    return tool?new tool(canvas):undefined;
+  }
+}
+ToolFactory.tools={
+    drag:Drag,
+    text:TextTool
+  };

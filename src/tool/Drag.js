@@ -30,8 +30,8 @@ export default class Drag{
     if(cursor==='grab'){
           let wkGrab='-webkit-grab',
           mzGrab='-moz-grab';
-          cursor=wkGrab;
-          moveCursor=wkGrab+'bing';
+          cursor='move';
+          moveCursor='move';
      
     }
     this.canvas.hoverCursor=cursor;
@@ -49,10 +49,10 @@ export default class Drag{
     let scale=options.e.deltaY,
         scope=0.2;
     if(scale<0){
-      if(this.scaleNumber<=10) this.scaleNumber+=scope;
+      if(this.scaleNumber<=10) this.scaleNumber+=scope*this.scaleNumber;
     }
     else{
-      if(this.scaleNumber>0.2) this.scaleNumber-=scope;
+      if(this.scaleNumber>0.2) this.scaleNumber-=scope*this.scaleNumber;
     } 
 
     let {x,y}=this.getMousePosition(options.e),

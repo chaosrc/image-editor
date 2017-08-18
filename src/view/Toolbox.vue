@@ -11,7 +11,7 @@ export default {
   name:"toolbox",
   data(){
     return {
-      tools:['drag','zoom','selector']
+      tools:['drag','text','selector']
     }
   },
   methods:{
