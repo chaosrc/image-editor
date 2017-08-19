@@ -1,19 +1,26 @@
 export default class ToolBase{
   constructor(canvas){
     this.canvas=canvas;
+    this.reciveProperty;
+    this.property={type:'basic'};
   }
   
   //call this function after choose this tool
-  selected(property,stack){
+  selected(reciveProperty,stack){
     this.addCursor();
     this.addMouseEvent();
+    this.reciveProperty=reciveProperty;
+    this.sendProperty();
   }
 
   remove(){
     this.removeMouseEvent();
     this.removeCursor();
   }
-
+  sendProperty(){
+    if(!(this.reciveProperty instanceof Function)) return;
+    this.reciveProperty(this.property);
+  }
   addCursor(){
   }
 
@@ -30,11 +37,16 @@ export default class ToolBase{
   }
 
   getPropertys(){
-
+    return this.property;
   }
-
-  setPropertys(){
-
+  setPropertys(options){
+    if(!options||options.type!==this.property.type) return;
+    this.property=options;
+    this.update();
+  }
+  update(){}
+  onPropertyCange(){
+    
   }
 
   getMousePosition(e){

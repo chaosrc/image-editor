@@ -1,20 +1,21 @@
-import Util from '../util/Util.js';
+import ToolBase from './ToolBase.js';
 
-export default class Drag{
+export default class Drag extends ToolBase {
   constructor(canvas){
-    this.canvas=canvas;
+    super(canvas);
     this.scaleNumber=1;
-    this.absolutePan={x:0,y:0};
+    // this.absolutePan={x:0,y:0};
     this.handleMouseWheel=this.handleMouseWheel.bind(this);
+    this.handleObjectSelected=this.handleObjectSelected.bind(this);
   }
   
   //call this function after choose this tool
   selected(property,stack){
+    super.selected();
     this.setCursor('grab');
     this.setSelectable(true);
-    this.addMouseEvent();
   }
-
+  
   remove(){
     //TODO:remove Event Styles
     this.setCursor('default');
@@ -40,10 +41,12 @@ export default class Drag{
   addMouseEvent(){
     this.canvas.on('mouse:wheel',this.handleMouseWheel);
     this.canvas.on('object:added',this.handleObjectAdd);
+    this.canvas.on('object:selected',this.handleObjectSelected);
   }
   removeMouseEvent(){
     this.canvas.off('mouse:wheel',this.handleMouseWheel);
-    this.canvas.off('object:added',this.handleObjectAdd)
+    this.canvas.off('object:added',this.handleObjectAdd);
+    this.canvas.off('object:selected',this.handleObjectSelected);
   }
   handleMouseWheel(options){
     let scale=options.e.deltaY,
@@ -65,6 +68,12 @@ export default class Drag{
   handleObjectAdd(e){
     e.target.selectable=true;
   }
+  handleObjectSelected(options){
+    this.currentObject=options.target;
+    console.log('drag selected',options.target);
+    this.property=options.target.toObject();
+    this.sendProperty();
+  }
   //get the mouse position from native event
   getMousePosition(e){
     let coord=fabric.util.getPointer(e);
@@ -72,11 +81,10 @@ export default class Drag{
     // fabric.util.getScrollLeftTop(this.canvas.upperCanvasEl);
     return {x:coord.x-offset.left,y:coord.y-offset.top};
   }
-  getPropertys(){
-
-  }
-  setPropertys(){
-
+  update(){
+    if(!this.currentObject) return;
+    this.currentObject.setOptins(this.property)
+    this.canvas.rendAll();
   }
 }
 

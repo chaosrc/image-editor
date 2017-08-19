@@ -3,6 +3,7 @@ export default class TextTool extends ToolBase{
   constructor(canvas){
     super(canvas);
     this.currentText;
+    this.property.type='i-text';
     this.handleMouseDown=this.handleMouseDown.bind(this);
   }
   
@@ -42,10 +43,13 @@ export default class TextTool extends ToolBase{
     this.currentText=activeText;
               // .selectAll();
     // activeText.hiddenTextarea.focus();
-    
-
+  
   }
-
+  setCurrentText(fabricText){
+    this.currentText=fabricText;
+    this.property=fabricText.toObject();
+    this.sendProperty();
+  }
   handleObjectAdd(e){
     e.target.selectable=true;
   }
@@ -54,11 +58,10 @@ export default class TextTool extends ToolBase{
     objects=objects.filter(obj=>obj.containsPoint(p));
     return objects&&objects.length?objects[objects.length-1]:undefined;
   }
-  getPropertys(){
-
-  }
-  setPropertys(){
-
+  update(){
+    if(!this.currentText) return;
+    this.currentText.setOpions(this.property);
+    this.canvas.rendAll();
   }
 }
 
