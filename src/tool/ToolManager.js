@@ -17,11 +17,11 @@ export default class ToolManager{
    * Select a tool object by the parameter tool
    * @param tool name of the tool object
    */
-  select(tool){
+  select(tool,reciveProperty){
     if(this.currentTool) this.currentTool.remove();
     this.currentTool=this.getTool(tool);
     if(!this.currentTool) return;
-    this.currentTool.selected();
+    this.currentTool.selected(reciveProperty);
     this.toolProperty=this.currentTool.property;
   }
   /**
@@ -41,6 +41,7 @@ export default class ToolManager{
   }
   set toolProperty(property){
     this._currentProperty=property;
+    this.currentTool.setPropertys(property);
   }
 }
 /**

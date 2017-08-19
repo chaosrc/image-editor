@@ -11,7 +11,7 @@ export default class Drag extends ToolBase {
   
   //call this function after choose this tool
   selected(property,stack){
-    super.selected();
+    super.selected(property,stack);
     this.setCursor('grab');
     this.setSelectable(true);
   }
@@ -70,8 +70,8 @@ export default class Drag extends ToolBase {
   }
   handleObjectSelected(options){
     this.currentObject=options.target;
-    console.log('drag selected',options.target);
-    this.property=options.target.toObject();
+    // console.log('drag selected',options.target);
+    this.property=ToolBase.getObjectStyle(options.target);
     this.sendProperty();
   }
   //get the mouse position from native event
@@ -83,8 +83,8 @@ export default class Drag extends ToolBase {
   }
   update(){
     if(!this.currentObject) return;
-    this.currentObject.setOptins(this.property)
-    this.canvas.rendAll();
+    this.currentObject.setOptions(this.property)
+    this.canvas.renderAll();
   }
 }
 

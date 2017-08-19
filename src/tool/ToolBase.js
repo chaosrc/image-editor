@@ -45,7 +45,7 @@ export default class ToolBase{
     this.update();
   }
   update(){}
-  onPropertyCange(){
+  onPropertyChange(){
     
   }
 
@@ -57,5 +57,25 @@ export default class ToolBase{
   }
   setSelectable(isSelectable){
     this.canvas.forEachObject(o=>o.selectable=isSelectable);
+  }
+
+  static getObjectStyle(object){
+    let obj=object.toObject();
+    let style={
+      type:'',
+      fill:'',
+      textBackgroundColor:''
+    };
+    for(let name in obj){
+      if(name in style){
+        let value=obj[name]
+        if(typeof value === 'string' &&value.match(/^rgb\([\d,]{5,11}\)/)){
+          value='#'+fabric.Color.fromRgb(value).toHex();
+        }
+        style[name]=value;
+      }
+    }
+    return style;
+
   }
 }

@@ -10,11 +10,16 @@ export default class TextTool extends ToolBase{
   //call this function after choose this tool
   selected(property,stack){
     super.selected(property,stack);
+    this.setSelectable(true);
   }
 
   remove(){
     super.remove();
     this.setSelectable(false);
+    if(this.currentText&&this.currentText.isEditing){
+      this.currentText.exitEditing();
+      this.canvas.deactivateAll();
+    }
   }
   addCursor(){
     this.canvas.hoverCursor='default';
@@ -29,6 +34,7 @@ export default class TextTool extends ToolBase{
   }
 
   handleMouseDown(option){
+    if(option.target===this.currentText) return;
     if(this.currentText&&!this.currentText.text){
       this.canvas.remove(this.currentText);
     }
@@ -36,18 +42,19 @@ export default class TextTool extends ToolBase{
     let activeText=this.getObjectFromPoint(point,'i-text');
     if(!activeText){
       activeText=new fabric.IText('',{top:point.y-30,left:point.x-2});
+      activeText.setOptions(this.property);
       this.canvas.add(activeText);
     }
     this.canvas.setActiveObject(activeText);
     activeText.enterEditing();
-    this.currentText=activeText;
+    this.setCurrentText(activeText);
               // .selectAll();
     // activeText.hiddenTextarea.focus();
   
   }
   setCurrentText(fabricText){
     this.currentText=fabricText;
-    this.property=fabricText.toObject();
+    this.property=ToolBase.getObjectStyle(fabricText);;
     this.sendProperty();
   }
   handleObjectAdd(e){
@@ -60,8 +67,8 @@ export default class TextTool extends ToolBase{
   }
   update(){
     if(!this.currentText) return;
-    this.currentText.setOpions(this.property);
-    this.canvas.rendAll();
+    this.currentText.setOptions(this.property);
+    this.canvas.renderAll();
   }
 }
 
