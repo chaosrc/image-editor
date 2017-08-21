@@ -20,6 +20,7 @@ export default class TextTool extends ToolBase{
       this.currentText.exitEditing();
       this.canvas.deactivateAll();
     }
+    this.currentText='';
   }
   addCursor(){
     this.canvas.hoverCursor='default';

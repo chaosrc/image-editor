@@ -21,6 +21,7 @@ export default class Drag extends ToolBase {
     this.setCursor('default');
     this.setSelectable(false);
     this.removeMouseEvent();
+    this.currentObject='';
 
   }
   setSelectable(isSelectable){
