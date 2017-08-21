@@ -74,6 +74,9 @@
         // console.log('recived',property);
       },
       handlePropertyChange(property){
+        if(property.type==='image-filter'){
+          this.toolManager.imageFilter(property.filters);
+        }
         this.toolManager.toolProperty=property;
         // console.log('onchange',property);
       }

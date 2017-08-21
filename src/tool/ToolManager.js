@@ -43,6 +43,26 @@ export default class ToolManager{
     this._currentProperty=property;
     this.currentTool.setPropertys(property);
   }
+  imageFilter(filters){
+    let img=this.canvas.getActiveObject();
+    if(!img||img.type!=='image') return;
+    //TODO:optimize performance
+   
+    let filterObjects=filters.map(v=>{
+      try {
+        return this.getFilter(v);
+      } catch (error) {
+        console.log('filter '+v+' is not existence',error);
+      }
+    });
+    // img.filters.splice(0);
+    img.filters=filterObjects;
+    img.applyFilters();
+    this.canvas.renderAll();
+  }
+  getFilter(name){
+    return new fabric.Image.filters[name]();
+  }
 }
 /**
  * ToolFactory to create tool object

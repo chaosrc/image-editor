@@ -4,6 +4,8 @@ export default class TextTool extends ToolBase{
     super(canvas);
     this.currentText;
     this.property.type='i-text';
+    this.property.fontSize=40;
+    this.property.fontFamily="monospace";
     this.handleMouseDown=this.handleMouseDown.bind(this);
   }
   

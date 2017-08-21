@@ -3,7 +3,7 @@
     <label class="btn">choose a image
     <input type="file" id="image-loader" accept="image/png,image/jpeg,image/gif" @change="onupdate"></label>
     <br><p class="notice" v-if="!isValidType">your file type '<i>{{fileType}}</i>' is not surport</p>
-    <p v-else-if="fileType"><strong>Name:</strong> {{fileName}}<br><strong>Type:</strong> {{fileType}}</p>
+    <!-- <p v-else-if="fileType"><strong>Name:</strong> {{fileName}}<br><strong>Type:</strong> {{fileType}}</p> -->
   </div>
 
 </template>

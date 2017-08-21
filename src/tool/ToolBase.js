@@ -64,7 +64,9 @@ export default class ToolBase{
     let style={
       type:'',
       fill:'',
-      textBackgroundColor:''
+      textBackgroundColor:'',
+      fontSize:'',
+      fontFamily:''
     };
     for(let name in obj){
       if(name in style){
