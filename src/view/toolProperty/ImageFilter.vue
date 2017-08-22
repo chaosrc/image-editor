@@ -12,9 +12,10 @@
 <script>
 export default {
   name:"image-filter",
+  props:["property"],
   data(){
     return {
-      filters:[
+      filterData:[
         {name:"Grayscale",value:"Grayscale",selected:false},
         {name:"Invert",value:"Invert",selected:false},
         {name:"Brightness",value:"Brightness",selected:false},
@@ -23,12 +24,36 @@ export default {
       ]
     }
   },
+  computed:{
+    filters:function(){
+     let fl=this.property.filters||[];
+     let fd=this.filterData;
+     fd.forEach(v=>{
+       let select=fl.some(i=>i===v.value);
+       if(select) v.selected=true;
+       else v.selected=false;
+     });
+    //  this.filterData.forEach(i=>{
+    //    if(!fl) {
+    //      i.seleted=false;
+    //      return;
+    //    }
+    //     fl.forEach(v=>{
+    //       if(i.value===v) i.selected=true;
+    //       else i.selected=false;
+    //     });
+    //   });
+      console.log('show data',this.filterData);
+      return this.filterData;
+    }
+  },
   methods:{
     handleSelect(index){
       this.filters[index].selected=!this.filters[index].selected;
       let validFilter=this.filters.filter(v=>v.selected)
                                   .map(v=>v.value);
-      this.$emit('change',{type:'image-filter',filters:validFilter});
+      console.log(validFilter);
+      this.$emit('change',{type:'image',filterNames:validFilter});
     }
   }
 }

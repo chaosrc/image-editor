@@ -88,3 +88,6 @@ export default class TextTool extends ToolBase{
  * getObjects(typeopt)
  * getActiveObject() 
  */
+
+
+ 

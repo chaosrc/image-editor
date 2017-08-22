@@ -50,7 +50,7 @@ export default class ToolManager{
    
     let filterObjects=filters.map(v=>{
       try {
-        return this.getFilter(v);
+        return this.createFilter(v);
       } catch (error) {
         console.log('filter '+v+' is not existence',error);
       }
@@ -60,7 +60,7 @@ export default class ToolManager{
     img.applyFilters();
     this.canvas.renderAll();
   }
-  getFilter(name){
+  createFilter(name){
     return new fabric.Image.filters[name]();
   }
 }
@@ -77,3 +77,4 @@ ToolFactory.tools={
     drag:Drag,
     text:TextTool
   };
+
