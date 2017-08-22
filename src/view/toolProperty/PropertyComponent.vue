@@ -55,6 +55,9 @@ export default {
   .margin-10{
     margin:10px;
   }
+  #property-component{
+    /* overflow-x: scroll; */
+  }
 </style>
 
 

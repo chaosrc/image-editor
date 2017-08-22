@@ -1,12 +1,14 @@
 
 <template>
-  <div  id="image-edit">
-    <upload-file @selected="imageUpload"></upload-file>
-    <div>
+  <div  id="image-editor" class="">
+    <div class="property-bar">
+      <upload-file @selected="imageUpload"></upload-file>
       <property-component :passproperty="toolProperty" @change="handlePropertyChange"></property-component>
-      <toolbox class="float-left" @select="handleToolSelect"></toolbox>
-      <div class="canvas-container float-left">
-        <canvas ref="canvas" width="300px" height="300px">
+    </div>
+    <div class="edit-container flex">
+        <toolbox class="" @select="handleToolSelect"></toolbox>
+      <div>
+        <canvas ref="canvas" width="400px" height="400px">
           you browser dosen't surport canvas
         </canvas>
       </div>
@@ -21,7 +23,7 @@
  import ToolManager from './tool/ToolManager';
  import PropertyComponent from './view/toolProperty/PropertyComponent.vue';
   export default {
-    name:'image-edit',
+    name:'image-editor',
     data(){
       return {
         canvas:'',
@@ -46,8 +48,10 @@
       },
       drawImage(file){
         let cvs=this.canvas;
+        let self=this;
         this.getImageFromFile(file,function(img){
           let image=new fabric.Image(img);
+          image.set({top:10,left:10}).scale(self.calcImageScale(image));
           cvs.add(image);
         });
       },
@@ -76,6 +80,21 @@
       handlePropertyChange(property){
         this.toolManager.toolProperty=property;
         // console.log('onchange',property);
+      },
+      calcImageScale(img){
+        let iw=img.width,
+            ih=img.height,
+            cw=this.canvas.width,
+            ch=this.canvas.height,
+            imax=iw>ih?iw:ih,
+            cmin=cw<ch?cw:ch,
+            space=10,
+            scale;
+        cmin-=space;
+        if(imax<=cmin) return 1;
+        scale=cmin/imax;
+        return Math.floor(scale*10)/10;
+
       }
     },
     components:{
@@ -90,11 +109,36 @@
 
 </style>
 <style>
+  #image-editor{
+    margin:30px auto;
+    max-width:450px;
+  }
+  body{
+    background:#ccc;
+  }
+  .edit-container{
+    position:relative;
+  }
+  .absolute-left-center{
+    position:absolute;
+    top:50%;
+    right:100%;
+    transform:translateY(-50%);
+  }
+  .flex{
+    display:flex;
+  }
+  .property-bar{
+    display:flex;
+    flex-wrap:wrap;
+    margin:0.75em;
+    align-items:center;
+  }
   .float-left{
      float:left; 
   }
-  canvas{
-    border:2px black solid;
+  .canvas-container{
+    background:white;
   }
   .cursor-grab{
     cursor:move;

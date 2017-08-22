@@ -1,7 +1,7 @@
 <template>
   <div id="toolbox">
-    <label v-for="tool in tools" v-bind:key="tool" >
-      <input type="radio" :value="tool" v-on:change="handleSelect" name="imge-tools">{{tool}}
+    <label v-for="(tool,index) in tools" v-bind:key="tool" :for="tool+icons[index]" >
+      <input :id="tool+icons[index]" class="hidden" type="radio" :value="tool" v-on:change="handleSelect" name="imge-tools"><i class="fa" :class="icons[index]"></i>
     </label>
   </div>
   
@@ -11,7 +11,8 @@ export default {
   name:"toolbox",
   data(){
     return {
-      tools:['drag','text','selector']
+      tools:['drag','text'],
+      icons:['fa-search-plus','fa-font']
     }
   },
   methods:{
@@ -24,5 +25,8 @@ export default {
 <style scoped>
   label{
     display:block;
+  }
+  .hidden{
+    display:none;
   }
 </style>
