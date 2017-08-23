@@ -1,7 +1,7 @@
 <template>
   <div id="text-property" class="flex-center">
-    <label class="item"><input type="color" v-model="_property.fill" @change="handleColorChange"></label>
-    <select  class="item" title="font size" name="font-size" id="font-size" v-model="_property.fontSize"  @change="handleColorChange">
+    <label class="item" title="color"><input class=" btn-basic" type="color" v-model="_property.fill" @change="handleColorChange"></label>
+    <select  class="item btn-basic" title="font size" name="font-size" id="font-size" v-model="_property.fontSize"  @change="handleColorChange">
       <option value="" hidden selected disabled>size</option>  
       <option v-for="item in fontSize" 
               :key="item.text" 
@@ -9,7 +9,7 @@
               :selected="item.selected"
               :hidden="item.hidden">{{item.text}}</option>
     </select>
-    <select  class="item" name="font-family" v-model="_property.fontFamily" @change="handleColorChange">
+    <select  title="font family" class="item btn-basic" name="font-family" v-model="_property.fontFamily" @change="handleColorChange">
       <option value="" hidden selected disabled>family</option> 
       <option v-for="font in fontFamily" :key="font.text" :value="font.value">{{font.text}}</option>
     </select>
@@ -85,6 +85,13 @@ export default {
   }
   .item{
     margin:0 5px;
+    font-weight:bolder;
+  }
+  .item{
+     color:#4E5DED;
+     }
+  .item>option{
+    color:white;
   }
 </style>
 

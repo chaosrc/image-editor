@@ -150,5 +150,15 @@
     cursor:-webkit-grabbing;
     cursor:-mz-grabbing;
   }
+  .btn-basic{
+    background:#b3b3b3;
+    color:#ece3e3;
+  }
+  .btn-basic:hover{
+    background:#a5a0a0;
+  }
+  .item-selected{
+    color:#4E5DED;
+  }
 </style>
 

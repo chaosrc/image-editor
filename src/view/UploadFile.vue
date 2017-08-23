@@ -1,8 +1,8 @@
 <template>
   <div id="upload-file">
-    <label class="btn">open
+    <label class="btn" title="open image"><i class="fa fa-folder-open"></i>
     <input type="file" id="image-loader" accept="image/png,image/jpeg,image/gif" @change="onupdate"></label>
-    <span class="btn" @click="onclick">save</span>
+    <span class="btn" @click="onclick" title="save image"><i class="fa fa-floppy-o"></i></span>
     <p class="notice abosulte-bottom" v-if="!isValidType">invalid file '<i>{{fileType}}</i>' </p>
     <!-- <p v-else-if="fileType"><strong>Name:</strong> {{fileName}}<br><strong>Type:</strong> {{fileType}}</p> -->
   </div>
@@ -76,14 +76,14 @@
   }
   .btn{
     display:inline-block;
-    background:#6060cc; 
-    color:white;
+    background:#b3b3b3; 
+    color:#4E5DED;
     cursor:pointer;
     padding:2px 6px;
     box-shadow:2px 2px 4px rgba(0,0,0,0.2);
     border-radius:4px;
   }
   .btn:hover{
-    opacity:0.9;
+     background:#a5a0a0;
   }
 </style>

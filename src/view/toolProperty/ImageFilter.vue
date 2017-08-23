@@ -1,6 +1,6 @@
 <template>
   <div id="image-filter" class="flex-center">
-    <div class="filter-item"
+    <div class="filter-item btn"
          v-for="(filter,index) in filters" 
          :class="{'item-selected':filter.selected}"  
          :key="filter.name"
@@ -17,7 +17,7 @@ export default {
     return {
       filterData:[
         {name:"Grayscale",value:"Grayscale",selected:false},
-        {name:"Invert",value:"Invert",selected:false},
+        // {name:"Invert",value:"Invert",selected:false},
         {name:"Brightness",value:"Brightness",selected:false},
         {name:"Sepia",value:"Sepia",selected:false},
         {name:"Noise",value:"Noise",selected:false}
@@ -59,12 +59,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .filter-item{
     display:inline-block;
+    margin-right:5px;
+  }
+  
+  .btn{
+    display:inline-block;
+    background:#b3b3b3; 
+    color:#ece3e3;
+    cursor:pointer;
+    padding:2px 6px;
+    box-shadow:2px 2px 4px rgba(0,0,0,0.2);
+    border-radius:4px;
+  }
+  .btn:hover{
+     background:#a5a0a0;
   }
   .item-selected{
-    color:blue;
+    color:#4E5DED;
   }
 </style>
 
