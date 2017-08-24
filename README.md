@@ -1,18 +1,18 @@
-# vue-app
+A simple image editor use fabric.js and vue.js
 
-> vue demo
+----
+![screenshot](./asset/image-editor.jpg)
 
-## Build Setup
+---
 
-``` bash
-# install dependencies
-npm install
+### TODO:
 
-# serve with hot reload at localhost:8080
-npm run dev
+**Menu**:
+- save picture
+- delete object
+- H5 drag
 
-# build for production with minification
-npm run build
-```
+**Tool**:
+- draw shapes
+- free draw
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
