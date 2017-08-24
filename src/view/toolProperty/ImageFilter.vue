@@ -52,7 +52,6 @@ export default {
       this.filters[index].selected=!this.filters[index].selected;
       let validFilter=this.filters.filter(v=>v.selected)
                                   .map(v=>v.value);
-      console.log(validFilter);
       this.$emit('change',{type:'image',filterNames:validFilter});
     }
   }

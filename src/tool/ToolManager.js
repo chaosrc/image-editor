@@ -11,7 +11,7 @@ export default class ToolManager{
   initCanvasState(){
     this.canvas.selection=false;
     this.canvas.hoverCursor='default';
-    this.canvas.on('object:added',e=>e.target.selectable=false);
+    this.canvas.on('object:added',e=>e.target.selectable=true);
   }
   /**
    * Select a tool object by the parameter tool

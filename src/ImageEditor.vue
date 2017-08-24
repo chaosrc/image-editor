@@ -88,12 +88,12 @@
             ch=this.canvas.height,
             imax=iw>ih?iw:ih,
             cmin=cw<ch?cw:ch,
-            space=10,
+            space=20,
             scale;
         cmin-=space;
         if(imax<=cmin) return 1;
         scale=cmin/imax;
-        return Math.floor(scale*10)/10;
+        return scale;
 
       }
     },

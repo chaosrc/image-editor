@@ -15,6 +15,8 @@ export default class Drag extends ToolBase {
     super.selected(property,stack);
     this.setCursor('grab');
     this.setSelectable(true);
+    let initObject=this.canvas.getActiveObject();
+    if(initObject) this.handleObjectSelected({target:initObject});
   }
   
   remove(){
@@ -123,7 +125,7 @@ class FilterManager{
   }
   applyFilter(filters,target){
     let img=this.currentImage=target;
-    if(!img||img.type!=='image') return;
+    if(!img||img.type!=='image'||!filters) return;
     let lastFilters=this.getImageFilter(img);
     let filterHolder=lastFilters.slice();
     //remove not needed filters
