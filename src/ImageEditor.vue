@@ -2,7 +2,7 @@
 <template>
   <div  id="image-editor" class="">
     <div class="property-bar">
-      <upload-file @selected="imageUpload"></upload-file>
+      <upload-file @selected="imageUpload" @save="saveImage"></upload-file>
       <property-component :passproperty="toolProperty" @change="handlePropertyChange"></property-component>
     </div>
     <div class="edit-container flex">
@@ -95,6 +95,21 @@
         scale=cmin/imax;
         return scale;
 
+      },
+      saveImage(){
+
+      },
+      downloadImageFromURL(url,fileName){
+        let link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.download = fileName;
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        delete link;
       }
     },
     components:{
