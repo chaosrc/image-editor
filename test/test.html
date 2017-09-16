@@ -43,6 +43,8 @@
 
     <button onclick="download()">download</button>
     <a href="https://bing.com"  download="bing.html">download bing</a>
+
+    <span onclick="save()">save</span>
     <script>
       let cvs=new fabric.Canvas('canvas');
       cvs.add(new fabric.Circle({radius:100,fill:'#ffa500',top:50,left:50}))
@@ -65,6 +67,11 @@
       function download(){
         console.log('begin download');
         downloadImageFromURL('https://bing.com','bing');
+      }
+
+      function save(){
+        alert('save');
+        console.log('save')
       }
       
     </script>

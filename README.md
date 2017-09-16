@@ -8,9 +8,10 @@ A simple image editor use fabric.js and vue.js
 ### TODO:
 
 **Menu**:
-- save picture
+- ~~save picture~~
 - delete object
 - H5 drag
+- preview before save
 
 **Tool**:
 - draw shapes

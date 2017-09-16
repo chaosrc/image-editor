@@ -97,19 +97,20 @@
 
       },
       saveImage(){
-
+        let dataURL = this.canvas.toDataURL();
+        this.downloadImageFromURL(dataURL);
       },
       downloadImageFromURL(url,fileName){
         let link = document.createElement('a');
         link.href = url;
         link.target = '_blank';
-        link.download = fileName;
+        link.download = fileName || 'file';
 
         document.body.appendChild(link);
         link.click();
 
         document.body.removeChild(link);
-        delete link;
+        link = null;
       }
     },
     components:{
